@@ -115,6 +115,70 @@
                 <!-- Histogram -->
                 <canvas id="myChart"></canvas>
                 <!-- Histogram -->
+
+                <!-- Addmission query  -->
+                <div class="w-full bg-[#fff] py-3 px-6 text-[18px] font-semibold mt-4">
+                    <h1>All Admission Query</h1>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobile Number</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Course</th>
+                            <!-- Add more headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Replace with actual data -->
+                        <%admission.forEach(function(elem){%>
+                            <tr>
+                                <td><%=elem.studentName%></td>
+                                <td><%=elem.studentEmail%></td>
+                                <td><%=elem.studentNumber%></td>
+                                <td><%=elem.state%></td>
+                                <td><%=elem.city%></td>
+                                <td><%=elem.courseName%></td>
+                            </tr>
+                        <%})%>
+                        
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+                <!-- addmission query end -->
+
+                <!--contact query  -->
+                <div class="w-full bg-[#fff] py-3 px-6 text-[18px] font-semibold mt-4">
+                    <h1>All Message Query</h1>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <!-- Add more headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Replace with actual data -->
+                        <%contact.forEach(function(elem){%>
+                            <tr>
+                                <td><%=elem.cName%></td>
+                                <td><%=elem.cEmail%></td>
+                                <td><%=elem.subject%></td>
+                                <td><%=elem.message%></td>
+                            </tr>
+                        <%})%>
+                        
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+                <!--contact query  -->
                 <!-- all users table -->
                 <div class="w-full bg-[#fff] py-3 px-6 text-[18px] font-semibold mt-4">
                     <h1>All Enrolled Students</h1>

@@ -3,6 +3,9 @@ const router= express.Router();
 const userModel = require("./users");
 const eventModel = require("./event")
 const courseModel = require("./course");
+const admissionModel = require("./admission");
+const contactModel = require("./contact");
+
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const cloudinary = require('cloudinary').v2;
@@ -17,7 +20,9 @@ cloudinary.config({
 });
 
 router.get('/', function (req, res, next) {
-  res.render('index', { error: req.flash('error') });
+  const successMessage = req.flash('success');
+  const errorMessage = req.flash('error');
+  res.render('index', { error: req.flash('error'), successMessage, errorMessage });
 });
 
 router.get('/about', function (req, res, next) {
@@ -38,10 +43,41 @@ router.get('/event', function (req, res, next) {
   res.render('events', { error: req.flash('error'), event});
 });
 
+router.get('/dashboard',isLoggedIn, async function(req,res,next){
+  const admission = await admissionModel.find({});
+  const contact = await contactModel.find({});
 
-router.get('/dashboard',isLoggedIn,function(req,res,next){
-  res.render("dashboard")
+  res.render("dashboard", {admission, contact})
 });
+
+router.post('/admission' ,async (req, res) => {
+    const newAdmission = new admissionModel({
+      studentName: req.body.name,
+      studentEmail: req.body.email,
+      studentNumber: req.body.number,
+      state: req.body.studentstate,
+      city: req.body.studentcity,
+      courseName: req.body.course,
+    });
+
+    await newAdmission.save();
+    req.flash('success', 'form submitted successfully');
+    res.redirect('/');
+});
+
+router.post('/contactform' ,async (req, res) => {
+  const newcontact = new contactModel({
+    cName: req.body.cname,
+    cEmail: req.body.cemail,
+    subject: req.body.csubject,
+    message: req.body.cmessage
+  });
+
+  await newcontact.save();
+  req.flash('success', 'form submitted successfully');
+  res.redirect('/contact');
+});
+
 router.post('/createCourse', isLoggedIn,async (req, res) => {
     const course = req.files.courseImage;
     cloudinary.uploader.upload(course.tempFilePath, async function (err, result) {
